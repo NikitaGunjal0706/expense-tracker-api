@@ -62,7 +62,7 @@ public class ExpenseService {
     }
 
     public List<Expense> getExpensesByCategory(String category) {
-        return expenseRepository.findByCategory(category);
+        return expenseRepository.findByCategoryIgnoreCase(category);
     }
 
     // Rule 3: Calculate total of all expenses

@@ -1,9 +1,12 @@
+
 package com.nikita.expense_tracker.controller;
 
 import com.nikita.expense_tracker.model.Expense;
 import com.nikita.expense_tracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.nikita.expense_tracker.service.GeminiService;
+import java.util.Map;
 
 import java.util.List;
 
@@ -11,6 +14,16 @@ import java.util.List;
 @RequestMapping("/api/expenses")
 public class ExpenseController {
 
+    @Autowired
+    private GeminiService geminiService;
+
+    @PostMapping("/ask")
+    public String askExpenses(@RequestBody Map<String, String> body) {
+        String question = body.get("question");
+        List<Expense> expenses = expenseService.getAllExpenses();
+        return geminiService.askAboutExpenses(question, expenses);
+    }
+    
     @Autowired
     private ExpenseService expenseService;
 
